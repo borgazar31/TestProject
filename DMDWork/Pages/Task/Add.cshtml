@@ -1,0 +1,44 @@
+﻿@page "{id?}"
+@model DMDWork.Pages.Task.AddModel;
+@{
+    ViewBag.Title = "Добавление задачи";
+}
+@{
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Добавить задачу</h4>
+        <form class="needs-validation" method="post">
+            <div class="row g-3">
+                <div class="col-12">
+                    <label class="form-label">Наименование задачи</label>
+                    <input type="text" name="name" id="name" class="form-control" />
+                    <span asp-validation-for="@Model.task.Name" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Описание</label>
+                    <input type="text" name="description" id="descripton" class="form-control" />
+                    <span asp-validation-for="@Model.task.Description" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Список исполнителей</label>
+                    <input type="text" name="listPerformers" id="listPerformers" class="form-control" />
+                    <span asp-validation-for="@Model.task.ListPerformers" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label">Плановая трудоемкость</label>
+                    <input type="text" name="pLaborIntesity" id="pLaborIntesity" class="form-control" />
+                    <span asp-validation-for="@Model.task.PLaborIntesity" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label">Родитель</label>
+                    <input type="text" name="idParent" id="idParent" class="form-control" value="@Model.idParent" />
+                </div>
+
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Добавить</button>
+            </div>
+        </form>
+    </div>
+</div>

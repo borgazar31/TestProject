@@ -1,0 +1,59 @@
+﻿@page "{id}"
+@model DMDWork.Pages.Task.UpdateModel
+@{
+    ViewBag.Title = "Обновление данные";
+}
+@{
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-7">
+        <h4 class="mb-3">Редактирование</h4>
+        <form class="needs-validation" method="post">
+            <div class="row g-3">
+                <div class="col-12">
+                    <label for="id" class="form-label">ID</label>
+                    <input type="number" name="id" id="id" class="form-control" value="@Model.UpTask.ID"/>
+                </div>
+                <div class="col-12">
+                    <label for="name" class="form-label">Наименование задачи</label>
+                    <input type="text" name="name" id="name" class="form-control" value="@Model.UpTask.Name" />
+                </div>
+                <div class="col-12">
+                    <label for="descripton" class="form-label">Описание</label>
+                    <input type="text" name="description" id="descripton" class="form-control" value="@Model.UpTask.Description" />
+                </div>
+                <div class="col-12">
+                    <label for="listPerformers" class="form-label">Список исполнителей</label>
+                    <input type="text" name="listPerformers" id="listPerformers" class="form-control" value="@Model.UpTask.ListPerformers" />
+                </div>
+                <div class="col-12">
+                    <label for="pLaborIntesity" class="form-label">Плановая трудоемкость</label>
+                    <input type="text" name="pLaborIntesity" id="pLaborIntesity" class="form-control" value="@Model.UpTask.PLaborIntesity" />
+                </div>
+                <div class="col-sm-6">
+                    <label for="taskStatus" class="form-label">Статус задачи</label>
+                    <select name="taskStatus" id="taskStatus" class="form-select" value="@Model.UpTask.TaskStatus">
+                        <option value="">Статус...</option>
+                        @if (@Model.UpTask.TaskStatus == "Выполняется")
+                        {
+                            <option>Приостановлена</option>
+                        }
+                        <option>Назначена</option>
+                        <option>Выполняется</option>
+                        <option>Завершена</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid status.
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="idParent" class="form-label">Родитель</label>
+                    <input type="text" name="idParent" id="idParent" class="form-control" value="@Model.UpTask.IdParent" />
+                </div>
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Обновить данные</button>
+            </div>
+        </form>
+    </div>
+</div>

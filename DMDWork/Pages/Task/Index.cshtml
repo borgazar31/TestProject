@@ -1,0 +1,154 @@
+﻿@page "{id?}"
+@{
+    Layout = "_Layout";
+}
+@model DMDWork.Pages.Task.IndexModel;
+@{
+    Childs child = new Childs();                        //
+    List<Childs> childs = Model.childs;                 //Список содержщий списки подзадач
+    string NameTask = "";                               //нужен для указания в интерфейсе уровня иерархии
+    int level;                                          //нужен для определения уровня иерархии
+}
+
+@{ // При каждом вызове функции повышает уровень, а при окончание убавляет. NameTask указывает уровень точками.
+   // Перебирает подзадачи, если у подзадачи есть подзадачи, то заново вызывает функцию
+    void BuildMenu1(Childs data)
+    {
+        level++;
+        if (data.Child.Any())
+        {
+            <ul class="nav nav-pills flex-column mb-auto">
+
+                @foreach (var a in data.Child)
+                {
+                    NameTask = "";
+                    @for (int i = 0; i < level; i++)
+                    {
+                        NameTask += '.';
+                    }
+
+                    @if (a.IdChild == null)
+                    {
+                        <li>
+                            <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item">@NameTask @a.Name</a>
+                        </li>
+                
+                        continue;
+                    }
+                    <li>
+                        <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item d-flex align-items-center text-decoration-none dropdown-toggle">@NameTask @a.Name</a>
+                        <ul class="nav nav-pills flex-column mb-auto">
+
+                            @foreach (var i in childs)
+                            {
+                                if (i.ID == a.ID)
+                                {
+                                    child = new Childs();
+                                    child = i;
+                                }
+                            }
+                            @{BuildMenu1(child);}
+
+                        </ul>
+                    </li>
+                }
+                @if (true)
+                { level--; }
+            </ul>
+        }
+
+    }
+}
+
+<div class="row">
+    <nav class="col-md-4 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="dropdown">
+            <ul class="nav nav-pills flex-column mb-auto">
+
+                @*Перебирает задачи, если у задачи есть подзадачи, то вызывает функцию*@
+                @foreach (var a in Model.tasks)
+                {
+                    level = 0;
+                    NameTask = "";
+                    @if (a.IdParent == 0)
+                    {
+
+                        @if (a.IdChild == null)
+                        {
+                            <li>
+                                <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item">@NameTask @a.Name</a>
+                            </li>
+                            continue;
+                        }
+                        <li>
+                            <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item d-flex align-items-center text-decoration-none dropdown-toggle">@NameTask @a.Name</a>
+
+                            @foreach (var i in childs)
+                            {
+                                if (i.ID == a.ID)
+                                {
+                                    child = new Childs();
+                                    child = i;
+                                    break;
+                                }
+                            }
+                            @{BuildMenu1(child);}
+
+
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </nav>
+
+    <main class="col-md-8 ms-sm-auto col-lg-9 px-md-4">
+        <div class="articleText">
+            @if (Model.task != null)
+            {
+                <h2>@Model.task.Name</h2>
+                <h6>Описание </h6>
+                <p>@Model.task.Description</p>
+
+                <h6>Список исполнителей </h6>
+                <p>@Model.task.ListPerformers</p>
+
+                <h6>Дата регистрации</h6>
+                <p>@Model.task.DateRegistr</p>
+
+                <h6>Статус задачи </h6>
+                <p>@Model.task.TaskStatus</p>
+
+                <h6>Плановая трудоемость </h6>
+                <p>@Model.task.PLaborIntesity</p>
+
+                @if (Model.task.TaskStatus == "Завершена")
+                {
+                    <h4>Фактическое время выполнения </h4>
+                    <p>@Model.task.FExecutionTime</p>
+
+                    <h4>Дата завершения </h4>
+                    <p>@Model.task.DateComplete</p>
+                }
+
+                @if (Model.task.IdChild != null)
+                {
+                    <h4>Список подзадач </h4>
+
+                    @foreach (Tasks a in Model.child.Child)
+                    {
+                        <p>@a.Name</p>
+                    }
+                }
+            }
+            <div class="hstack gap-2 mx-auto row">
+                @if (Model.task != null)
+                {
+                    <a href='@Url.Page("Add", new {id=Model.task.ID})' class="btn btn-primary" type="button">Добавить подзадачу</a>
+                    <a href='@Url.Page("Update", new {id=Model.task.ID})' class="btn btn-primary" type="button">Обновить</a>
+                    <a href='@Url.Page("Delete", new {id=Model.task.ID})' class="btn btn-primary" type="button">Удалить</a>
+                 }
+            </div>
+        </div>
+    </main>
+</div>
