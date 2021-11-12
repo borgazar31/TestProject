@@ -1,11 +1,11 @@
-using DMDWork.Data.Interface;
-using DMDWork.Data.Models;
+using TaskManagement.Data.Interface;
+using TaskManagement.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Linq;
 
-namespace DMDWork.Pages.Task
+namespace TaskManagement.Pages.Task
 {
     public class UpdateModel : PageModel
     {
@@ -18,7 +18,6 @@ namespace DMDWork.Pages.Task
             _task = itask;
         }
 
-        [HttpPost]
         public IActionResult OnPost(int id, string name, string description, string listPerformers, int pLaborIntesity, string taskStatus, string idParent)
         {
             Tasks task = _task.GetTask(id);
@@ -46,7 +45,7 @@ namespace DMDWork.Pages.Task
             IdTask = id;
         }
 
-        public TimeSpan UpdateChild(Tasks tasks)
+        private TimeSpan UpdateChild(Tasks tasks)
         {
             //Если есть подзадачи, то меняет их статусы на "Завершена", определяет дату завершения и время выполнения.
 

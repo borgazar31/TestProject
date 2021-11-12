@@ -2,6 +2,7 @@
 @model DMDWork.Pages.Task.AddModel;
 @{
     ViewBag.Title = "Добавление задачи";
+    ViewBag.User = HttpContext.Session.GetString("login");
 }
 @{
     Layout = "_Layout";

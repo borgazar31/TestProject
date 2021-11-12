@@ -1,10 +1,10 @@
-using DMDWork.Data.Interface;
-using DMDWork.Data.Models;
+using TaskManagement.Data.Interface;
+using TaskManagement.Data.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DMDWork.Pages.Task
+namespace TaskManagement.Pages.Task
 {
     public class IndexModel : PageModel
     {
@@ -17,6 +17,9 @@ namespace DMDWork.Pages.Task
         public IndexModel(ITask itask)
         {
             _task = itask;
+            //task = _task.GetTask(2);
+            //task.IdChild = "3";
+            //_task.UpdateTask(task);
             childs = _task.AllChild.ToList();
             tasks = _task.AllTask.ToList();
         }

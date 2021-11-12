@@ -9,31 +9,59 @@
     <title>@ViewBag.Title</title>
     <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/css/site.css" rel="stylesheet" type="text/css" />
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/style.min.css" type="text/css"  />
 </head>
 <body>
-    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href='@Url.Page("Index")'>Управление задачами</a>
-
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
+    @*<header>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container">
                 <a class="nav-link" href='@Url.Page("Add")'>Добавить задачу</a>
-            </li>
-        </ul>
-    </header>
+                @if (ViewBag.User != "")
+                {         
+                     <a class="nav-link" href='#'>@ViewBag.User</a>
+                }
+            </div>
+        </div>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href='@Url.Page("Index")'>Управление задачами</a>
+            </div>
+        </div>
+    </header>*@
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
 
-    <div class="container-fluid"> 
-            @RenderBody()
-            <script src="~/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-            <script src="~/js/bootstrap.min.js"></script>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href='@Url.Page("Add")'>Добавить задачу</a>
+        
+        @if (ViewBag.User != "")
+        {
+            <div class="navbar-nav">
+                <div class="nav-item text-nowrap">
+                    <a class="nav-link px-3" href='#'>@ViewBag.User</a>
+                </div>
+            </div>
+        }
+
+    </header>   
+
+    <div class="container-fluid">
+        @RenderBody()
     </div>
+    <script src="~/js/jstree.min.js"></script>
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    @*<script>
+        $(function () {
+            $('#jstree').jstree();
+            $('#jstree').on("changed.jstree", function (e, data) {
+                console.log(data.selected);
+            });
+            $('button').on('click', function () {
+                $('#jstree').jstree(true).select_node('child_node_1');
+                $('#jstree').jstree('select_node', 'child_node_1');
+                $.jstree.reference('#jstree').select_node('child_node_1');
+            });
+        });
+    </script>*@
 </body>
 </html>

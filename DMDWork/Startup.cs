@@ -1,23 +1,16 @@
+using TaskManagement.Data;
+using TaskManagement.Data.Interface;
+using TaskManagement.Data.Models;
+using TaskManagement.Data.Repository;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DMDWork.Data.Interface;
-using DMDWork.Data.Repository;
-using DMDWork.Data;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
-using Microsoft.EntityFrameworkCore;
-using DMDWork.Data.Models;
-using Microsoft.AspNetCore.Http;
 
-namespace DMDWork
+namespace TaskManagement
 {
     public class Startup
     {
@@ -31,12 +24,15 @@ namespace DMDWork
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddRazorPages();
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDBContent>(optionsBuilder => optionsBuilder.UseSqlServer(connection));
             services.AddMvc();
+            services.AddSession();
             services.AddControllersWithViews();
             services.AddTransient<ITask, Repository>();
+            services.AddTransient<IUser, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,8 +52,10 @@ namespace DMDWork
             app.UseStatusCodePages();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //_ = app.UseMvcWithDefaultRoute();
             app.UseRouting();
+            app.UseAuthentication();    // аутентификация
+            app.UseAuthorization();
+            app.UseSession();
 
             using (var scope = app.ApplicationServices.CreateScope())
             {

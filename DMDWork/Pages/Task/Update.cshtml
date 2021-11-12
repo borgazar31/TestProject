@@ -2,6 +2,7 @@
 @model DMDWork.Pages.Task.UpdateModel
 @{
     ViewBag.Title = "Обновление данные";
+    ViewBag.User = HttpContext.Session.GetString("login");
 }
 @{
     Layout = "_Layout";

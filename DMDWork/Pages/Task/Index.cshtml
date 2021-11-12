@@ -4,84 +4,118 @@
 }
 @model DMDWork.Pages.Task.IndexModel;
 @{
+    ViewBag.Title = "Задачи";
+    ViewBag.User = HttpContext.Session.GetString("login");
     Childs child = new Childs();                        //
     List<Childs> childs = Model.childs;                 //Список содержщий списки подзадач
-    string NameTask = "";                               //нужен для указания в интерфейсе уровня иерархии
-    int level;                                          //нужен для определения уровня иерархии
+    //string NameTask = "";                               //нужен для указания в интерфейсе уровня иерархии
+    //int level;                                          //нужен для определения уровня иерархии
 }
-
+<!--#region failMenu  -->
 @{ // При каждом вызове функции повышает уровень, а при окончание убавляет. NameTask указывает уровень точками.
-   // Перебирает подзадачи, если у подзадачи есть подзадачи, то заново вызывает функцию
-    void BuildMenu1(Childs data)
-    {
-        level++;
-        if (data.Child.Any())
+    // Перебирает подзадачи, если у подзадачи есть подзадачи, то заново вызывает функцию
+
+    @*void BuildMenu1(Childs data)
         {
-            <ul class="nav nav-pills flex-column mb-auto">
+            level++;
+            if (data.Child.Any())
+            {
+                    <ul class="nav nav-pills flex-column mb-auto">
 
-                @foreach (var a in data.Child)
-                {
-                    NameTask = "";
-                    @for (int i = 0; i < level; i++)
-                    {
-                        NameTask += '.';
-                    }
-
-                    @if (a.IdChild == null)
-                    {
-                        <li>
-                            <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item">@NameTask @a.Name</a>
-                        </li>
-                
-                        continue;
-                    }
-                    <li>
-                        <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item d-flex align-items-center text-decoration-none dropdown-toggle">@NameTask @a.Name</a>
-                        <ul class="nav nav-pills flex-column mb-auto">
-
-                            @foreach (var i in childs)
+                        @foreach (var a in data.Child)
+                        {
+                            NameTask = "";
+                            @for (int i = 0; i < level; i++)
                             {
-                                if (i.ID == a.ID)
-                                {
-                                    child = new Childs();
-                                    child = i;
-                                }
+                                NameTask += '_';
                             }
-                            @{BuildMenu1(child);}
 
-                        </ul>
-                    </li>
+                            @if (a.IdChild == null)
+                            {
+                                <li>
+                                    <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item">@NameTask @a.Name</a>
+                                </li>
+
+                                continue;
+                            }
+                            <li>
+                                <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item d-flex align-items-center text-decoration-none dropdown-toggle">@NameTask @a.Name</a>
+                                <ul class="nav nav-pills flex-column mb-auto">
+
+                                    @foreach (var i in childs)
+                                    {
+                                        if (i.ID == a.ID)
+                                        {
+                                            child = new Childs();
+                                            child = i;
+                                        }
+                                    }
+                                    @{BuildMenu1(child);}
+
+                                </ul>
+                            </li>
+                        }
+                        @if (true)
+                        { level--; }
+                    </ul>
                 }
-                @if (true)
-                { level--; }
-            </ul>
-        }
 
-    }
-}
+            }*@
 
-<div class="row">
-    <nav class="col-md-4 col-lg-2 d-md-block bg-light sidebar collapse">
-        <div class="dropdown">
-            <ul class="nav nav-pills flex-column mb-auto">
+    @*void BuildMenu1(Childs data)
+        {
+            if (data.Child.Any())
+            {
+                <ul class="nav nav-pills flex-column mb-auto">
 
-                @*Перебирает задачи, если у задачи есть подзадачи, то вызывает функцию*@
-                @foreach (var a in Model.tasks)
-                {
-                    level = 0;
-                    NameTask = "";
-                    @if (a.IdParent == 0)
+                    @foreach (var a in data.Child)
                     {
 
                         @if (a.IdChild == null)
                         {
                             <li>
-                                <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item">@NameTask @a.Name</a>
+                                <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item">@a.Name</a>
                             </li>
+
                             continue;
                         }
                         <li>
-                            <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item d-flex align-items-center text-decoration-none dropdown-toggle">@NameTask @a.Name</a>
+                            <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item d-flex align-items-center text-decoration-none dropdown-toggle">@a.Name</a>
+                            <ul class="nav nav-pills flex-column mb-auto">
+
+                                @foreach (var i in childs)
+                                {
+                                    if (i.ID == a.ID)
+                                    {
+                                        child = new Childs();
+                                        child = i;
+                                    }
+                                }
+                                @{BuildMenu1(child);}
+
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            }
+
+        }*@
+}
+<!--#endregion -->
+
+<div class="row">
+    <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <div class="position-sticky pt-3">
+            <ul>              
+                @*Перебирает задачи, если у задачи есть подзадачи, то вызывает функцию*@
+                @foreach (var a in Model.tasks)
+                {
+                    //level = 0;
+                    //NameTask = "";
+                    @if (a.IdParent == 0)
+                    {
+                        <li>
+                            <a href='@Url.Page("Index", new {id = a.ID})' class="dropdown-item d-flex align-items-center text-decoration-none ">@a.Name</a>
 
                             @foreach (var i in childs)
                             {
@@ -92,9 +126,7 @@
                                     break;
                                 }
                             }
-                            @{BuildMenu1(child);}
-
-
+                            @*@{BuildMenu1(child);}*@
                         </li>
                     }
                 }
@@ -134,11 +166,12 @@
                 @if (Model.task.IdChild != null)
                 {
                     <h4>Список подзадач </h4>
-
-                    @foreach (Tasks a in Model.child.Child)
-                    {
-                        <p>@a.Name</p>
-                    }
+                    <ul>
+                        @foreach (Tasks a in Model.child.Child)
+                        {
+                        <li><a href='@Url.Page("Index", new {id = a.ID})' class="text-decoration-none"><h4>@a.Name </h4> </a></li>
+                        }
+                    </ul>
                 }
             }
             <div class="hstack gap-2 mx-auto row">
@@ -147,7 +180,7 @@
                     <a href='@Url.Page("Add", new {id=Model.task.ID})' class="btn btn-primary" type="button">Добавить подзадачу</a>
                     <a href='@Url.Page("Update", new {id=Model.task.ID})' class="btn btn-primary" type="button">Обновить</a>
                     <a href='@Url.Page("Delete", new {id=Model.task.ID})' class="btn btn-primary" type="button">Удалить</a>
-                 }
+                }
             </div>
         </div>
     </main>

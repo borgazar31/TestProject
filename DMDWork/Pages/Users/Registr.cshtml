@@ -1,0 +1,41 @@
+﻿@page
+@model DMDWork.Pages.Users.RegistrModel
+@{
+    ViewBag.Title = "Регистрация";
+}
+@{
+    Layout = "";
+}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Пример на bootstrap 5: Форма входа - макет и дизайн формы · Версия v5.1.1">
+    <title>@ViewBag.Title</title>
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link href="~/css/signin.css" rel="stylesheet">
+</head>
+<body class="text-center">
+    <main class="form-signin">
+        <form method="post" asp-page="index">
+            <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+            <div class="form-floating">
+                <input type="text" class="form-control" id="floatingLog" name="login" placeholder="name@example.com">
+                <label for="floatingLog">Login</label>
+            </div>
+            <div class="form-floating">
+                <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрировать</button>
+        </form>
+    </main>
+    <script src="/docs/5.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>
+</html>

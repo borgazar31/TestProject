@@ -1,10 +1,10 @@
-using DMDWork.Data.Interface;
-using DMDWork.Data.Models;
+using TaskManagement.Data.Interface;
+using TaskManagement.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 
-namespace DMDWork.Pages.Task
+namespace TaskManagement.Pages.Task
 {
     public class AddModel : PageModel
     {

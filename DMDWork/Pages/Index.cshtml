@@ -1,5 +1,60 @@
 ﻿@page
 @model DMDWork.Pages.IndexModel
 @{
-    Layout = "_Layout";
+    ViewBag.Title = "Авторизация";
 }
+@{
+    Layout = "";
+}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Пример на bootstrap 5: Форма входа - макет и дизайн формы · Версия v5.1.1">
+    <title>@ViewBag.Title</title>
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link href="~/css/signin.css" rel="stylesheet">
+</head>
+<body class="text-center">
+    <main class="form-signin">
+        <form method="post" asp-page="index">
+            <h1 class="h3 mb-3 fw-normal">Авторизация</h1>
+            <div class="form-floating">
+                <input type="email" class="form-control" asp-for="@Model.user.Email" name="email" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" asp-for="@Model.user.Password" name="password" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+            <hr>
+            <a href='@Url.Page("Users/Registr")' class="w-100 btn btn-lg btn-primary">Регистрация</a>
+
+        </form>
+        <!--#region exp  -->
+        @*<input href='@Url.Page("Users/Registr")' class="w-100 btn btn-lg btn-primary" value="Регистрация" />*@
+        @*<div class="dropdown">
+            <a href='@Url.Page("Users/Registr")' class="d-flex align-items-center">
+                <strong>Reg</strong>
+            </a>
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false" />
+
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser">
+                <li><a class="dropdown-item d-flex align-items-center text-decoration-none dropdown-toggle" href="#" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">New project...</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Sign out</a></li>
+            </ul>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+            </ul>
+        </div>*@
+        <!--#endregion  -->
+    </main>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

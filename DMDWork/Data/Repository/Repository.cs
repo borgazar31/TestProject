@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DMDWork.Data.Interface;
-using DMDWork.Data.Models;
+using TaskManagement.Data.Interface;
+using TaskManagement.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DMDWork.Data.Repository
+namespace TaskManagement.Data.Repository
 {
     public class Repository : ITask
     {
@@ -19,10 +19,10 @@ namespace DMDWork.Data.Repository
         
         public IEnumerable<Tasks> AllTask => appDBContent.Tasks;
 
-        public IEnumerable<Childs> AllChild => GetChild();
+        public IEnumerable<Childs> AllChild => GetChild();  
 
         //Создает список из Childs, которые имеют подзадачи
-        public IEnumerable<Childs> GetChild()
+        private IEnumerable<Childs> GetChild()
         {
             List<Childs> childs = new List<Childs>();
             List<Tasks> tasks = AllTask.ToList();
@@ -51,7 +51,6 @@ namespace DMDWork.Data.Repository
             return childs;
         }
 
-
         public void AddTask(Tasks task)
         {
             appDBContent.Tasks.Add(task);
@@ -62,7 +61,11 @@ namespace DMDWork.Data.Repository
             { 
                 task = appDBContent.Tasks.FirstOrDefault(a => a.DateRegistr == task.DateRegistr);
                 Tasks parentTask = appDBContent.Tasks.FirstOrDefault(a => a.ID == task.IdParent);
-                parentTask.IdChild += $"{task.ID} ";
+                if(parentTask.IdChild == null)
+                    parentTask.IdChild += $"{task.ID}";
+                else
+                    parentTask.IdChild += $" {task.ID}";
+
                 UpdateTask(parentTask);
             }
             
@@ -76,7 +79,6 @@ namespace DMDWork.Data.Repository
 
         public Tasks GetTask(int ID) => appDBContent.Tasks.FirstOrDefault(a => a.ID == ID);
 
-
         public void UpdateTask(Tasks task)
         {
             Tasks oldTask = GetTask(task.ID);
@@ -88,7 +90,7 @@ namespace DMDWork.Data.Repository
             {
                 if ((oldTask.IdParent != 0) & (task.IdParent == 0))
                 {
-                    Tasks parentTask = appDBContent.Tasks.FirstOrDefault(a => a.ID == oldTask.IdParent);
+                    Tasks parentTask = GetTask(oldTask.IdParent);
                     Childs childsParent = AllChild.ToList().Find(a => a.ID == oldTask.IdParent);
                     childsParent.Child.Remove(task);
 
@@ -99,13 +101,13 @@ namespace DMDWork.Data.Repository
                 }
                 else if ((oldTask.IdParent == 0) & (task.IdParent != 0))
                 {
-                    Tasks parentTask = appDBContent.Tasks.FirstOrDefault(a => a.ID == task.IdParent);
+                    Tasks parentTask = GetTask(task.IdParent);
                     parentTask.IdChild += $"{task.ID} ";
                     UpdateTask(parentTask);
                 }
                 else
                 {
-                    Tasks oldparentTask = appDBContent.Tasks.FirstOrDefault(a => a.ID == oldTask.IdParent);
+                    Tasks oldparentTask = GetTask(oldTask.IdParent);
                     Childs childsParent = AllChild.ToList().Find(a => a.ID == oldTask.IdParent);
                     childsParent.Child.Remove(task);
 

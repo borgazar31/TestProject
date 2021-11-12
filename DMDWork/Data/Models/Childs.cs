@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DMDWork.Data.Models
+namespace TaskManagement.Data.Models
 {
     //Childs содержит ID задачи и список подзадач.
     public class Childs

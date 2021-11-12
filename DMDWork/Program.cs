@@ -6,11 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DMDWork.Data;
+using TaskManagement.Data;
 using Microsoft.Extensions.DependencyInjection;
-using DMDWork.Data.Models;
+using TaskManagement.Data.Models;
 
-namespace DMDWork
+namespace TaskManagement
 {
     public class Program
     {

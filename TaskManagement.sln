@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMDWork", "DMDWork\DMDWork.csproj", "{0535ECF7-997F-40B1-9754-579DFA2E9855}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManagement", "DMDWork\TaskManagement.csproj", "{0535ECF7-997F-40B1-9754-579DFA2E9855}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

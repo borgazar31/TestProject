@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DMDWork.Data.Models;
+using TaskManagement.Data.Models;
 using System.Threading.Tasks;
 
-namespace DMDWork.Data.Interface
+namespace TaskManagement.Data.Interface
 {
     public interface ITask
     {
